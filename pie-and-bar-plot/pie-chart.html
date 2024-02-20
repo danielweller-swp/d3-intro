@@ -38,7 +38,7 @@ And it's also a bit more complex to build in D3 :P
             "🏎️": 30
         };
 
-        const width = 450;
+        const width = 600;
         const height = width;
         const radius = Math.min(width, height) / 2 - 10;
 
@@ -83,7 +83,7 @@ And it's also a bit more complex to build in D3 :P
             .text(d => `${d.data[0]}`)
             .attr("transform", d => `translate(${outerArc.centroid(d)})`)
             .style("text-anchor", "middle")
-            .style("font-size", 18);
+            .style("font-size", 24);
     </script>
 </body>
 </html>
