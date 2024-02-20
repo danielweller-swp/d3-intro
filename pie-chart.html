@@ -1,9 +1,24 @@
+<!--
+
+PLEASE NOTE:
+Pie charts can be used to generate a rough picture of fractions, however, some information is lost in this form of plot.
+It is recommended to rather use bar plots, as they allow for a more precise comparison between categories.
+
+Additionally, this chart needs a lot of colors to be able to distinguish between the different categories, which can be a
+problem for colorblind people.
+
+And it's also a bit more complex to build in D3 :P
+
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pie Chart with Annotations</title>
+    <link href="styles.css" rel="stylesheet">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
@@ -12,20 +27,20 @@
     <script>
         const data = {
             "🦩": 400,
-            "👍": 160,
+            "👍": 175,
             "❤️": 100,
             "🤣": 90,
             "🎉": 80,
             "🙌": 53,
-            "🥳": 32,
-            "🔥": 30,
-            "😲": 25,
-            "🏎️": 20
+            "🥳": 42,
+            "🔥": 40,
+            "😲": 35,
+            "🏎️": 30
         };
 
-        const width = 500;
+        const width = 450;
         const height = width;
-        const radius = Math.min(width, height) / 2;
+        const radius = Math.min(width, height) / 2 - 10;
 
         const svg = d3.select("#pie-chart")
             .attr("width", width)
@@ -46,6 +61,10 @@
             .innerRadius(0)
             .outerRadius(radius);
 
+        const outerArc = d3.arc()
+            .innerRadius(radius  * 0.87)
+            .outerRadius(radius * 0.87);
+
         svg.selectAll("slices")
             .data(data_ready)
             .enter()
@@ -60,10 +79,11 @@
             .data(data_ready)
             .enter()
             .append("text")
-            .text(d => `${d.data[0]}: ${d.data[1]}`)
-            .attr("transform", d => `translate(${arc.centroid(d)})`)
+            // .text(d => `${d.data[0]}: ${d.data[1]}`)
+            .text(d => `${d.data[0]}`)
+            .attr("transform", d => `translate(${outerArc.centroid(d)})`)
             .style("text-anchor", "middle")
-            .style("font-size", 12);
+            .style("font-size", 18);
     </script>
 </body>
 </html>

@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,20 +16,20 @@
     <script>
         const data = {
             "🦩": 400,
-            "👍": 160,
+            "👍": 175,
             "❤️": 100,
             "🤣": 90,
             "🎉": 80,
             "🙌": 53,
-            "🥳": 32,
-            "🔥": 30,
-            "😲": 25,
-            "🏎️": 20
+            "🥳": 42,
+            "🔥": 40,
+            "😲": 35,
+            "🏎️": 30
         };
 
         const margin = { top: 20, right: 30, bottom: 40, left: 40 };
-        const width = 600 - margin.left - margin.right;
-        const height = 400 - margin.top - margin.bottom;
+        const width = 700 - margin.left - margin.right;
+        const height = 450 - margin.top - margin.bottom;
 
         const svg = d3.select("#bar-plot")
             .attr("width", width + margin.left + margin.right)
@@ -51,9 +54,11 @@
             .style("text-anchor", "end")
             .attr("dx", ".7em")
             .attr("dy", "1em")
+            .style("font-size", "18px")
 
         svg.append("g")
-            .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y))
+            .style("font-size", "18px");
 
         svg.selectAll("bar")
             .data(Object.entries(data))
@@ -65,17 +70,6 @@
             .attr("height", d => height - y(d[1]))
             .attr("fill", "steelblue")
             .attr("class", "bar");
-
-        svg.selectAll("text")
-            .data(Object.entries(data))
-            .enter()
-            .append("text")
-            .text(d => `${d[0]}: ${d[1]}`)
-            .attr("x", d => x(d[0]) + x.bandwidth() / 2)
-            .attr("y", d => y(d[1]) - 5)
-            .attr("text-anchor", "middle")
-            .style("font-size", "12px")
-            .style("fill", "black");
     </script>
 </body>
 </html>

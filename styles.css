@@ -1,3 +1,8 @@
 .bar {
     fill: #016871
 }
+
+body {
+    margin: 50px;
+    font-size: 18px;
+}
