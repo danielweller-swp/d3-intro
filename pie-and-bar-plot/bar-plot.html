@@ -14,7 +14,7 @@
     <svg id="bar-plot"></svg>
 
     <script>
-        const data = {
+        var data = {
             "🦩": 400,
             "👍": 175,
             "❤️": 100,
@@ -26,6 +26,10 @@
             "😲": 35,
             "🏎️": 30
         };
+
+        for (const key in data) {
+            data[key] = (data[key] / 400) * 100;
+        }
 
         const margin = { top: 20, right: 30, bottom: 40, left: 40 };
         const width = 700 - margin.left - margin.right;
