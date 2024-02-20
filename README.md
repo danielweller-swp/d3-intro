@@ -34,8 +34,9 @@ python -m uvicorn app:app --reload
 
 
 ## TODOs
-- [ ] Add plots
+- [ ] Add code for both plots
 - [ ] add exact instructions how to set up env and run code
 - [ ] Add comments
 - [ ] Final cleanup
+- [ ] Add sample image of plots to readme
 - [x] pin versions in requirements.txt
