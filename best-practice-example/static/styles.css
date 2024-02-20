@@ -1,0 +1,22 @@
+.container {
+    width: auto;
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    background-color: #E0E9F0;
+    box-sizing: border-box;
+    margin: 30px;
+    border-radius: 5px;
+}
+
+#left_column {
+    padding: 50px;
+    width: 50%;
+}
+
+#right_column {
+    padding: 50px;
+    width: 50%;
+}
