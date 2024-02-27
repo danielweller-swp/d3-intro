@@ -34,9 +34,11 @@ python -m uvicorn app:app --reload
 
 
 ## TODOs
-- [ ] Add code for both plots
+- [ ] fix deleting plot issue
+- [ ] get spacing on right side back
 - [ ] add exact instructions how to set up env and run code
 - [ ] Add comments
 - [ ] Final cleanup
 - [ ] Add sample image of plots to readme
+- [x] Add code for both plots
 - [x] pin versions in requirements.txt
