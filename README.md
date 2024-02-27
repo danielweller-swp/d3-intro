@@ -32,10 +32,10 @@ python -m uvicorn app:app --reload
 ```
 
 
-
 ## TODOs
 - [ ] fix deleting plot issue
 - [ ] get spacing on right side back
+- [ ] add folder with plots and interactivity
 - [ ] add exact instructions how to set up env and run code
 - [ ] Add comments
 - [ ] Final cleanup
