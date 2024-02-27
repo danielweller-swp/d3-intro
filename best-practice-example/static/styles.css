@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #F0F0F0;
+    margin: 0px;
 }
 
 h1 {
@@ -18,7 +19,7 @@ h1 {
     flex: 1;
     background-color: #E0E9F0;
     box-sizing: border-box;
-    margin: 30px;
+    margin: 20px;
     padding: 20px;
     border-radius: 5px;
 }
