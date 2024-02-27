@@ -13,10 +13,10 @@ function displayScatterPlot() {
         // Store values for svg creation
         const parent = d3.select("#right_column")
         const width = parent._groups[0][0]["clientWidth"];
-        const height = parent._groups[0][0]["clientHeight"] + 50;
+        const height = width * 0.6;
 
         // Define padding
-        var padding = {top: 20, right: 20, bottom: 10, left: 10};
+        var padding = {top: 0, right: 10, bottom: 20, left: 30};
 
         // Append SVG
         var svg = parent.append("svg")
@@ -26,19 +26,20 @@ function displayScatterPlot() {
 
 
         // X and Y scales
-        var x = d3.scaleLinear()
-            .domain(d3.extent(parsedData, d => d[0]))  // returns list [min, max] of provided data
+        const xMinMax = d3.extent(parsedData, d => d[0]) // returns list [min, max] of provided data
+        var xScale = d3.scaleLinear()
+            .domain([xMinMax[0] * 0.95, xMinMax[1] * 1.05])
             .range([padding.left, width - padding.right]);
 
-        var y = d3.scaleLinear()
-            .domain(d3.extent(parsedData, d => d[1]))
+        const yMinMax = d3.extent(parsedData, d => d[1])
+        var yScale = d3.scaleLinear()
+            .domain([yMinMax[0] * 0.95, yMinMax[1] * 1.05])
             .range([height - padding.bottom, padding.top]);  // Note that the "origin" is defined as the upper left corner, thus we need to invert the range
-            // TODO check if works!
 
         // X axis
         svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
+            .attr("transform", "translate(0," + (height - padding.bottom) + ")")
+            .call(d3.axisBottom(xScale))
             .append("text")
             .attr("class", "label")
             .attr("x", width)
@@ -48,10 +49,10 @@ function displayScatterPlot() {
 
         // Y axis
         svg.append("g")
-            .call(d3.axisLeft(y))
+            .attr("transform", "translate(" + (padding.left) + ",0)")
+            .call(d3.axisLeft(yScale))
             .append("text")
             .attr("class", "label")
-            .attr("transform", "rotate(-90)")
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
@@ -62,8 +63,8 @@ function displayScatterPlot() {
             .data(parsedData)
             .enter().append("circle")
             .attr("class", "dot")
-            .attr("cx", d => x(d[0]))
-            .attr("cy", d => y(d[1]))
+            .attr("cx", d => xScale(d[0]))
+            .attr("cy", d => yScale(d[1]))
             .attr("r", 2);
     });
 }
