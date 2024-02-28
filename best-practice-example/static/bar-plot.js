@@ -7,12 +7,14 @@ function displayBarPlot() {
     d3.selectAll("#barPlot").remove();
 
     // Load data from CSV and build bar plot
-    d3.text("static/data/data.csv").then(data => {
-        // Parse data to array of objects
-        var parsedData = d3.csvParseRows(data, d => ({ label: d[0], value: +d[1] }));
+    d3.csv("static/data/data.csv", d => ({
+            employee: d.employee,
+            coffeeConsumption: +d.coffee_consumption,
+            flamingoEnthusiasm: +d.flamingo_enthusiasm,
+            peelSkill: +d.peel_skill
+        })).then(data => {
 
-        // Drop the first row (column names)
-        parsedData = parsedData.slice(1);
+            console.log(data)
 
         // Store values for svg creation
         var parent = d3.select("#left_column")
@@ -31,12 +33,12 @@ function displayBarPlot() {
 
         // Define scales
         var xScale = d3.scaleBand()
-            .domain(parsedData.map(d => d.label))
+            .domain(data.map(d => d.employee))
             .range([padding.left, width - padding.right])
             .padding(0.1);
 
         var yScale = d3.scaleLinear()
-            .domain([0, d3.max(parsedData, d => d.value)])
+            .domain([0, d3.max(data, d => d.peelSkill)])
             .nice()
             .range([height - padding.bottom, padding.top]);
 
@@ -61,13 +63,13 @@ function displayBarPlot() {
 
         // Create and append bars
         svg.selectAll(".bar")
-            .data(parsedData)
+            .data(data)
             .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", d => xScale(d.label))
-            .attr("y", d => yScale(d.value))
+            .attr("x", d => xScale(d.employee))
+            .attr("y", d => yScale(d.peelSkill))
             .attr("width", xScale.bandwidth())
-            .attr("height", d => height - padding.bottom - yScale(d.value))
+            .attr("height", d => height - padding.bottom - yScale(d.peelSkill))
             .attr("fill", "steelblue");
 
         // Add a y-axis label

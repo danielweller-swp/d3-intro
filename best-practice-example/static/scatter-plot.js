@@ -7,12 +7,12 @@ function displayScatterPlot() {
     d3.selectAll("#scatterPlot").remove();
 
     // Load data from CSV and build scatter plot
-    d3.text("static/data/data.csv").then(data => {
-        // Parse data to array of numbers
-        var parsedData = d3.csvParseRows(data, d => [+d[1], +d[2]]);
-
-        // Drop the first row (column names)
-        parsedData = parsedData.slice(1);
+    d3.csv("static/data/data.csv", d => ({
+            employee: d.employee,
+            coffeeConsumption: +d.coffee_consumption,   // convert values to number
+            flamingoEnthusiasm: +d.flamingo_enthusiasm,
+            peelSkill: +d.peel_skill
+        })).then(data => {
 
         // Store values for svg creation
         var parent = d3.select("#right_column")
@@ -29,12 +29,12 @@ function displayScatterPlot() {
             .attr("height", height);
 
         // x and y scales
-        const xMinMax = d3.extent(parsedData, d => d[0]) // returns list [min, max] of provided data
+        const xMinMax = d3.extent(data, d => d.coffeeConsumption) // returns list [min, max] of provided data
         var xScale = d3.scaleLinear()
             .domain([xMinMax[0] * 0.95, xMinMax[1] * 1.05])
             .range([padding.left, width - padding.right]);
 
-        const yMinMax = d3.extent(parsedData, d => d[1])
+        const yMinMax = d3.extent(data, d => d.flamingoEnthusiasm)
         var yScale = d3.scaleLinear()
             .domain([yMinMax[0] * 0.95, yMinMax[1] * 1.05])
             .range([height - padding.bottom, padding.top]);  // Note that the "origin" is defined as the upper left corner, thus we need to invert the range
@@ -51,11 +51,11 @@ function displayScatterPlot() {
 
         // Create circles for each data point
         svg.selectAll(".dot")
-            .data(parsedData)
+            .data(data)
             .enter().append("circle")
             .attr("class", "dot")
-            .attr("cx", d => xScale(d[0]))
-            .attr("cy", d => yScale(d[1]))
+            .attr("cx", d => xScale(d.coffeeConsumption))
+            .attr("cy", d => yScale(d.flamingoEnthusiasm))
             .attr("r", 2);
 
         // Add an x-axis label
