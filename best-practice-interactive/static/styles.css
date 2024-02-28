@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F0F0F0;
+    margin: 0px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 60px;
+}
+
+.container {
+    width: auto;
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    background-color: #E0E9F0;
+    box-sizing: border-box;
+    padding: 25px 40px 25px 40px;
+    margin: 40px;
+    border-radius: 5px;
+}
+
+#left_column {
+    width: 50%;
+    margin-right: 20px;
+}
+
+#right_column {
+    width: 50%;
+    margin-left: 20px;
+}
+
+.dot {
+    fill: #1F7A8C;
+}
+
+.bar {
+    fill: #1F7A8C;
+}
+
+.label {
+    font-size: 18px;
+}
