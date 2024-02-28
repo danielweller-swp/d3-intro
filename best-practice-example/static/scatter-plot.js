@@ -17,11 +17,11 @@ function displayScatterPlot() {
 
         // Store values for svg creation
         var parent = d3.select("#right_column");
-        const width = parent._groups[0][0].clientWidth - 40;
-        const height = width * 0.6 + 20;  // make plot height always 60% of the width
+        const width = parent.node().clientWidth - 100;
+        const height = width * 0.6;  // make plot height always 60% of the width
 
         // Define padding around the svg
-        var padding = {top: 0, right: 10, bottom: 50, left: 55};
+        var padding = {top: 5, right: 10, bottom: 55, left: 70};
 
         // Append SVG
         var svg = parent.append("svg")
@@ -29,26 +29,31 @@ function displayScatterPlot() {
             .attr("width", width)
             .attr("height", height);
 
-        // x and y scales
-        const xMinMax = d3.extent(data, d => d.coffeeConsumption) // returns list [min, max] of provided data
+        // Scale for x axis
         var xScale = d3.scaleLinear()
-            .domain([xMinMax[0] * 0.95, xMinMax[1] * 1.05])
+            .domain(d3.extent(data, d => d.coffeeConsumption)) // returns list [min, max] of provided data
+            .nice()
             .range([padding.left, width - padding.right]);
 
-        const yMinMax = d3.extent(data, d => d.flamingoEnthusiasm);
+        // Scale for y axis
         var yScale = d3.scaleLinear()
-            .domain([yMinMax[0] * 0.95, yMinMax[1] * 1.05])
+            .domain(d3.extent(data, d => d.flamingoEnthusiasm))
+            .nice()
             .range([height - padding.bottom, padding.top]);  // Note that the "origin" is defined as the upper left corner, thus we need to invert the range
 
-        // Plot x axis
+        // Add x axis
         svg.append("g")
             .attr("transform", "translate(0," + (height - padding.bottom) + ")")
-            .call(d3.axisBottom(xScale));
+            .call(d3.axisBottom(xScale))
+            .selectAll("text") // Select all text elements in the axis
+                .style("font-size", "12px");
 
-        // Plot y axis
+        // Add y axis
         svg.append("g")
             .attr("transform", "translate(" + (padding.left) + ",0)")
-            .call(d3.axisLeft(yScale));
+            .call(d3.axisLeft(yScale))
+            .selectAll("text") // Select all text elements in the axis
+                .style("font-size", "12px");
 
         // Circle size scaler
         const circleScaler = d3.scaleSqrt()
@@ -70,16 +75,16 @@ function displayScatterPlot() {
         svg.append("text")
             .attr("class", "label")
             .attr("x", padding.left + (width - padding.left - padding.right) / 2)
-            .attr("y", height - 6)
+            .attr("y", height - 5)
             .style("text-anchor", "middle")
-            .text("☕ Consumption");
+            .text("☕ Consumption / month");
 
         // Add a y-axis label
         svg.append("text")
             .attr("class", "label")
             .attr("transform", "rotate(-90)")
             .attr("x", -(height - padding.top - padding.bottom)/2  - padding.top)
-            .attr("dy", "1em")
+            .attr("dy", "1.2em")
             .style("text-anchor", "middle")
             .text("🦩 Enthusiasm Level");
     });

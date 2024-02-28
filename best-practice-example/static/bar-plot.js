@@ -17,11 +17,11 @@ function displayBarPlot() {
 
         // Store values for svg creation
         var parent = d3.select("#left_column");
-        const width = parent.node().clientWidth - 40;
+        const width = parent.node().clientWidth - 100;
         const height = width * 0.6;  // make plot height always 60% of the width
 
         // Define padding around the svg
-        var padding = {top: 10, right: 20, bottom: 60, left: 55};
+        var padding = {top: 10, right: 20, bottom: 75, left: 70};
 
         // Create SVG container
         var svg = d3.select("#left_column")
@@ -30,12 +30,13 @@ function displayBarPlot() {
             .attr("width", width)
             .attr("height", height);
 
-        // Define scales
+        // Scale for x axis
         var xScale = d3.scaleBand()
             .domain(data.map(d => d.employee))
             .range([padding.left, width - padding.right])
-            .padding(0.1);
+            .padding(0.2);  // control space between bars
 
+        // Scale for y axis
         var yScale = d3.scaleLinear()
             .domain([0, d3.max(data, d => d.peelSkill)])
             .nice()
@@ -50,15 +51,18 @@ function displayBarPlot() {
             .attr("transform", "translate(0," + (height - padding.bottom) + ")")
             .call(xAxis)
             .selectAll("text") // Select all the text elements for styling
-            .attr("transform", "rotate(-45)")
-            .attr("text-anchor", "end")
-            .attr("dx", "-0.6em")
-            .attr("dy", "0.5em");
+                .attr("transform", "rotate(-45)")
+                .attr("text-anchor", "end")
+                .attr("dx", "-0.6em")
+                .attr("dy", "0.5em")
+                .style("font-size", "12px");
 
         svg.append("g")
             .attr("class", "y-axis")
             .attr("transform", "translate(" + padding.left + ",0)")
-            .call(yAxis);
+            .call(yAxis)
+            .selectAll("text") // Select all text elements in the axis
+                .style("font-size", "12px");
 
         // Create and append bars
         svg.selectAll(".bar")
