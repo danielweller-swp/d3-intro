@@ -19,17 +19,19 @@ h1 {
     flex: 1;
     background-color: #E0E9F0;
     box-sizing: border-box;
-    margin: 20px;
     padding: 20px;
+    margin: 40px;
     border-radius: 5px;
 }
 
 #left_column {
     width: 50%;
+    margin-right: 20px;
 }
 
 #right_column {
     width: 50%;
+    margin-left: 20px;
 }
 
 .dot {
