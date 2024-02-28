@@ -29,26 +29,28 @@ function displayScatterPlot() {
             .attr("width", width)
             .attr("height", height);
 
-        // Scale for x axis
-        var xScale = d3.scaleLinear()
+        // Scale for x-axis
+        // Check out https://www.d3indepth.com/scales/ for other scales
+        var xScale = d3.scaleLinear()  // linearly map data to pixels
             .domain(d3.extent(data, d => d.coffeeConsumption)) // returns list [min, max] of provided data
-            .nice()
-            .range([padding.left, width - padding.right]);
+            .nice()  // prevents points from lying exactly on the axis
+            .range([padding.left, width - padding.right]); // defines which pixel values can be used for the axis
+            // Note that the "origin" is defined as the upper left corner, thus we need to invert the range
 
-        // Scale for y axis
+        // Scale for y-axis
         var yScale = d3.scaleLinear()
             .domain(d3.extent(data, d => d.flamingoEnthusiasm))
             .nice()
-            .range([height - padding.bottom, padding.top]);  // Note that the "origin" is defined as the upper left corner, thus we need to invert the range
+            .range([height - padding.bottom, padding.top]);
 
-        // Add x axis
+        // Add x-axis
         svg.append("g")
             .attr("transform", "translate(0," + (height - padding.bottom) + ")")
             .call(d3.axisBottom(xScale))
             .selectAll("text") // Select all text elements in the axis
                 .style("font-size", "12px");
 
-        // Add y axis
+        // Add y-axis
         svg.append("g")
             .attr("transform", "translate(" + (padding.left) + ",0)")
             .call(d3.axisLeft(yScale))
@@ -56,11 +58,11 @@ function displayScatterPlot() {
                 .style("font-size", "12px");
 
         // Circle size scaler
-        const circleScaler = d3.scaleSqrt()
+        const circleScaler = d3.scaleSqrt()  // as area scales with the square of the radius, we use a sqrt scale
             .domain(d3.extent(data, d => d.peelSkill))
-            .range([2, 12]);
+            .range([2, 12]);  // range for radius of dots in pixels
 
-        // Create circles for each data point
+        // Plot actual data: Create circles for each data point
         svg.selectAll(".dot")
             .data(data)
             .enter()

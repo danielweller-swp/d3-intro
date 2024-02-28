@@ -30,13 +30,13 @@ function displayBarPlot() {
             .attr("width", width)
             .attr("height", height);
 
-        // Scale for x axis
+        // Scale for x-axis
         var xScale = d3.scaleBand()
             .domain(data.map(d => d.employee))
             .range([padding.left, width - padding.right])
             .padding(0.2);  // control space between bars
 
-        // Scale for y axis
+        // Scale for y-axis
         var yScale = d3.scaleLinear()
             .domain([0, d3.max(data, d => d.peelSkill)])
             .nice()
