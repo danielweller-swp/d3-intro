@@ -9,13 +9,14 @@ function displayScatterPlot() {
     // Load data from CSV and build scatter plot
     d3.csv("static/data/data.csv", d => ({
             employee: d.employee,
-            coffeeConsumption: +d.coffee_consumption,   // convert values to number
+            coffeeConsumption: +d.coffee_consumption, // convert values to number
             flamingoEnthusiasm: +d.flamingo_enthusiasm,
             peelSkill: +d.peel_skill
-        })).then(data => {
+        })
+    ).then(data => {
 
         // Store values for svg creation
-        var parent = d3.select("#right_column")
+        var parent = d3.select("#right_column");
         const width = parent._groups[0][0].clientWidth - 40;
         const height = width * 0.6 + 20;  // make plot height always 60% of the width
 
@@ -34,7 +35,7 @@ function displayScatterPlot() {
             .domain([xMinMax[0] * 0.95, xMinMax[1] * 1.05])
             .range([padding.left, width - padding.right]);
 
-        const yMinMax = d3.extent(data, d => d.flamingoEnthusiasm)
+        const yMinMax = d3.extent(data, d => d.flamingoEnthusiasm);
         var yScale = d3.scaleLinear()
             .domain([yMinMax[0] * 0.95, yMinMax[1] * 1.05])
             .range([height - padding.bottom, padding.top]);  // Note that the "origin" is defined as the upper left corner, thus we need to invert the range
@@ -42,21 +43,28 @@ function displayScatterPlot() {
         // Plot x axis
         svg.append("g")
             .attr("transform", "translate(0," + (height - padding.bottom) + ")")
-            .call(d3.axisBottom(xScale))
+            .call(d3.axisBottom(xScale));
 
         // Plot y axis
         svg.append("g")
             .attr("transform", "translate(" + (padding.left) + ",0)")
-            .call(d3.axisLeft(yScale))
+            .call(d3.axisLeft(yScale));
+
+        // Circle size scaler
+        const circleScaler = d3.scaleSqrt()
+            .domain(d3.extent(data, d => d.peelSkill))
+            .range([2, 12]);
 
         // Create circles for each data point
         svg.selectAll(".dot")
             .data(data)
-            .enter().append("circle")
-            .attr("class", "dot")
-            .attr("cx", d => xScale(d.coffeeConsumption))
-            .attr("cy", d => yScale(d.flamingoEnthusiasm))
-            .attr("r", 2);
+            .enter()
+            .append("circle")
+                .attr("class", "dot")
+                .attr("fill-opacity", "0.6")
+                .attr("cx", d => xScale(d.coffeeConsumption))
+                .attr("cy", d => yScale(d.flamingoEnthusiasm))
+                .attr("r", d => circleScaler(d.peelSkill));
 
         // Add an x-axis label
         svg.append("text")

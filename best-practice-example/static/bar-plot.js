@@ -12,12 +12,11 @@ function displayBarPlot() {
             coffeeConsumption: +d.coffee_consumption,
             flamingoEnthusiasm: +d.flamingo_enthusiasm,
             peelSkill: +d.peel_skill
-        })).then(data => {
-
-            console.log(data)
+        })
+    ).then(data => {
 
         // Store values for svg creation
-        var parent = d3.select("#left_column")
+        var parent = d3.select("#left_column");
         const width = parent.node().clientWidth - 40;
         const height = width * 0.6;  // make plot height always 60% of the width
 
@@ -64,13 +63,14 @@ function displayBarPlot() {
         // Create and append bars
         svg.selectAll(".bar")
             .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", d => xScale(d.employee))
-            .attr("y", d => yScale(d.peelSkill))
-            .attr("width", xScale.bandwidth())
-            .attr("height", d => height - padding.bottom - yScale(d.peelSkill))
-            .attr("fill", "steelblue");
+            .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.employee))
+                .attr("y", d => yScale(d.peelSkill))
+                .attr("width", xScale.bandwidth())
+                .attr("height", d => height - padding.bottom - yScale(d.peelSkill))
+                .attr("fill", "steelblue");
 
         // Add a y-axis label
         svg.append("text")
