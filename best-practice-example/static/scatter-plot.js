@@ -1,6 +1,6 @@
 // Description: This file contains the code to display a scatter plot in the right column of the web page.
 
-function displayScatterPlot() {
+function displayScatterPlot(selectedEmployee) {
     console.log("Displaying scatter plot")
 
     // Remove old scatter plot(s)
@@ -63,15 +63,65 @@ function displayScatterPlot() {
             .range([2, 12]);  // range for radius of dots in pixels
 
         // Plot actual data: Create circles for each data point
-        svg.selectAll(".dot")
+        svg.append("g")
+            .selectAll("circle")
             .data(data)
             .enter()
-            .append("circle")
-                .attr("class", "dot")
+                .append("circle")
+                .attr("fill", d => d.employee === selectedEmployee ? "orange" : "#1F7A8C")
                 .attr("fill-opacity", "0.6")
                 .attr("cx", d => xScale(d.coffeeConsumption))
                 .attr("cy", d => yScale(d.flamingoEnthusiasm))
-                .attr("r", d => circleScaler(d.peelSkill));
+                .attr("r", d => circleScaler(d.peelSkill))
+            // ADDING INTERACTIVITY
+                .on("click", clickToggle)
+                .on("mouseover", hoverOn)
+                .on("mouseout", hoverOff);
+            //
+
+
+        // Interactivity functions
+        function hoverOn(event, d) {
+            console.log(d.employee)
+            d3.select(this)
+                .raise()
+                .transition().duration(100)
+                .attr("fill", "orange");
+
+            // Add a text label to the dot
+            svg.append("text")
+                .attr("class", "employeeLabel")
+                .attr("x", xScale(d.coffeeConsumption))
+                .attr("y", yScale(d.flamingoEnthusiasm) - 12)
+                .attr("text-anchor", "middle")
+                .text(d.employee)
+                .style("font-size", "12px")
+                .style("fill", "black")
+                .attr("opacity", 0)
+                .transition().duration(100)
+                .attr("opacity", 0.7);
+
+            displayBarPlot(d.employee)
+        }
+
+        function hoverOff(event, d) {
+            console.log("HOVERING OFF")
+            d3.select(this)
+                .transition().duration(300)
+                .attr("fill", "#1F7A8C");
+
+            d3.selectAll(".employeeLabel")
+                .transition().duration(200)
+                .attr("opacity", 0)
+                .remove();
+
+            displayBarPlot()
+        }
+
+        function clickToggle(event, d) {
+            // Do something on click
+        }
+
 
         // Add an x-axis label
         svg.append("text")

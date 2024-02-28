@@ -1,6 +1,6 @@
 // Description: This file contains the code to display a bar plot in the left column of the webpage.
 
-function displayBarPlot() {
+function displayBarPlot(selectedEmployee) {
     console.log("Displaying bar plot")
 
     // Remove old bar plot(s)
@@ -42,12 +42,12 @@ function displayBarPlot() {
             .nice()
             .range([height - padding.bottom, padding.top]);
 
-        // Create and append axes
+        // Create axes
         var xAxis = d3.axisBottom(xScale);
         var yAxis = d3.axisLeft(yScale);
 
+        // Add x-axis
         svg.append("g")
-            .attr("class", "x-axis")
             .attr("transform", "translate(0," + (height - padding.bottom) + ")")
             .call(xAxis)
             .selectAll("text") // Select all the text elements for styling
@@ -57,8 +57,8 @@ function displayBarPlot() {
                 .attr("dy", "0.5em")
                 .style("font-size", "12px");
 
+        // Add y-axis
         svg.append("g")
-            .attr("class", "y-axis")
             .attr("transform", "translate(" + padding.left + ",0)")
             .call(yAxis)
             .selectAll("text") // Select all text elements in the axis
@@ -69,12 +69,40 @@ function displayBarPlot() {
             .data(data)
             .enter()
                 .append("rect")
-                .attr("class", "bar")
+                .attr("fill", d => d.employee === selectedEmployee ? "orange" : "#1F7A8C")
                 .attr("x", d => xScale(d.employee))
                 .attr("y", d => yScale(d.peelSkill))
                 .attr("width", xScale.bandwidth())
                 .attr("height", d => height - padding.bottom - yScale(d.peelSkill))
-                .attr("fill", "steelblue");
+            // ADDING INTERACTIVITY
+                .on("click", clickToggle)
+                .on("mouseover", hoverOn)
+                .on("mouseout", hoverOff);
+            //;
+
+        // Interactivity functions
+        function hoverOn(event, d) {
+            console.log("HOVERING ON")
+            d3.select(this)
+                .transition().duration(50)
+                .attr("fill", "orange");
+
+            displayScatterPlot(d.employee)
+        }
+
+        function hoverOff(event, d) {
+            console.log("HOVERING OFF")
+            d3.select(this)
+                .transition().duration(300)
+                .attr("fill", "#1F7A8C");
+
+            displayScatterPlot()
+        }
+
+        function clickToggle(event, d) {
+            // Do something on click
+        }
+
 
         // Add a y-axis label
         svg.append("text")
