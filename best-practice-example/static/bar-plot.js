@@ -7,14 +7,7 @@ function displayBarPlot(selectedEmployee) {
     d3.selectAll("#barPlot").remove();
 
     // Load data from CSV and build bar plot
-    d3.csv("static/data/data.csv", d => ({
-            employee: d.employee,
-            coffeeConsumption: +d.coffee_consumption,
-            flamingoEnthusiasm: +d.flamingo_enthusiasm,
-            peelSkill: +d.peel_skill
-        })
-    ).then(data => {
-
+    loadData().then(data => {
         // Store values for svg creation
         var parent = d3.select("#left_column");
         const width = parent.node().clientWidth - 100;
