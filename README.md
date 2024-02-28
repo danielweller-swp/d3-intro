@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ```
 
 ## Execute server to display plots
-From within `best-practice-example`
+From within `best-practice-example` or `best-practice-interactive`
 ```bash
 python -m uvicorn app:app --reload
 ```

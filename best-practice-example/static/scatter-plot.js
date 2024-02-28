@@ -16,11 +16,11 @@ function displayScatterPlot() {
 
         // Store values for svg creation
         var parent = d3.select("#right_column")
-        const width = parent._groups[0][0]["clientWidth"];
+        const width = parent._groups[0][0].clientWidth - 50; // FIXME
         const height = width * 0.6 + 20;  // make plot height always 60% of the width
 
         // Define padding around the svg
-        var padding = {top: 0, right: 10, bottom: 50, left: 50};
+        var padding = {top: 0, right: 10, bottom: 50, left: 55};
 
         // Append SVG
         var svg = parent.append("svg")
@@ -71,7 +71,7 @@ function displayScatterPlot() {
             .attr("class", "label")
             .attr("transform", "rotate(-90)")
             .attr("x", -(height - padding.top - padding.bottom)/2  - padding.top)
-            .attr("dy", ".72em")
+            .attr("dy", ".74em")
             .style("text-anchor", "middle")
             .text("Flamingo Enthusiasm Level");
     });
