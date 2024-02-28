@@ -31,3 +31,11 @@ h1 {
 #right_column {
     width: 50%;
 }
+
+.dot {
+    fill: #1F7A8C;
+}
+
+.bar {
+    fill: #1F7A8C;
+}
