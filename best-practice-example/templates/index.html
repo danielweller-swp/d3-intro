@@ -15,9 +15,8 @@
       <h1>Post-It Peel Skill Level</h1>
       <script src="{{ url_for('static', path='/bar-plot.js') }}"></script>
       <script>
-        // try to encapsulate in firstBuild function
         displayBarPlot();
-        addEventListener("resize", displayBarPlot);
+        addEventListener("resize", displayBarPlot);  // Allow the plot to resize when the window changes
       </script>
     </div>
 

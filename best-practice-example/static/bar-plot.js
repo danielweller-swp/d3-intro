@@ -16,8 +16,7 @@ function displayBarPlot() {
 
         // Store values for svg creation
         var parent = d3.select("#left_column")
-        const width = parent.node().clientWidth - 50;  // FIXME
-        console.log(parent.node())
+        const width = parent.node().clientWidth - 40;
         const height = width * 0.6;  // make plot height always 60% of the width
 
         // Define padding around the svg
@@ -76,8 +75,8 @@ function displayBarPlot() {
             .attr("class", "label")
             .attr("transform", "rotate(-90)")
             .attr("x", -(height - padding.top - padding.bottom)/2 - padding.top)
-            .attr("dy", ".74em")
+            .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Post-it Peel Skill Level");
+            .text("📝 Post-it Peel Skill Level");
     });
 }

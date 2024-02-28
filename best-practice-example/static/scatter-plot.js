@@ -16,7 +16,7 @@ function displayScatterPlot() {
 
         // Store values for svg creation
         var parent = d3.select("#right_column")
-        const width = parent._groups[0][0].clientWidth - 50; // FIXME
+        const width = parent._groups[0][0].clientWidth - 40;
         const height = width * 0.6 + 20;  // make plot height always 60% of the width
 
         // Define padding around the svg
@@ -64,15 +64,15 @@ function displayScatterPlot() {
             .attr("x", padding.left + (width - padding.left - padding.right) / 2)
             .attr("y", height - 6)
             .style("text-anchor", "middle")
-            .text("Coffee Consumption");
+            .text("☕ Consumption");
 
         // Add a y-axis label
         svg.append("text")
             .attr("class", "label")
             .attr("transform", "rotate(-90)")
             .attr("x", -(height - padding.top - padding.bottom)/2  - padding.top)
-            .attr("dy", ".74em")
+            .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Flamingo Enthusiasm Level");
+            .text("🦩 Enthusiasm Level");
     });
 }
