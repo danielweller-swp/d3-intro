@@ -3,11 +3,12 @@
 function displayBarPlot(selectedEmployee) {
     console.log("Displaying bar plot")
 
-    // Remove old bar plot(s)
-    d3.selectAll("#barPlot").remove();
-
     // Load data from CSV and build bar plot
     loadData().then(data => {
+        // Remove old bar plot(s)
+        d3.selectAll("#barPlot").remove();
+        // Best practice here would be to introduce an "enter exit update loop" -> but more complex
+
         // Store values for svg creation
         var parent = d3.select("#left_column");
         const width = parent.node().clientWidth - 100;
@@ -67,15 +68,13 @@ function displayBarPlot(selectedEmployee) {
                 .attr("y", d => yScale(d.peelSkill))
                 .attr("width", xScale.bandwidth())
                 .attr("height", d => height - padding.bottom - yScale(d.peelSkill))
-            // ADDING INTERACTIVITY
+                // ADDING INTERACTIVITY
                 .on("click", clickToggle)
                 .on("mouseover", hoverOn)
                 .on("mouseout", hoverOff);
-            //;
 
         // Interactivity functions
         function hoverOn(event, d) {
-            console.log("HOVERING ON")
             d3.select(this)
                 .transition().duration(50)
                 .attr("fill", "orange");
@@ -84,7 +83,6 @@ function displayBarPlot(selectedEmployee) {
         }
 
         function hoverOff(event, d) {
-            console.log("HOVERING OFF")
             d3.select(this)
                 .transition().duration(300)
                 .attr("fill", "#1F7A8C");

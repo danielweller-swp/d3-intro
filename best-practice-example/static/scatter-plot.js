@@ -3,11 +3,13 @@
 function displayScatterPlot(selectedEmployee) {
     console.log("Displaying scatter plot")
 
-    // Remove old scatter plot(s)
-    d3.selectAll("#scatterPlot").remove();
+
 
     // Load data from CSV and build scatter plot
     loadData().then(data => {
+        // Remove old scatter plot(s)
+        d3.selectAll("#scatterPlot").remove();
+
         // Store values for svg creation
         var parent = d3.select("#right_column");
         const width = parent.node().clientWidth - 100;
@@ -66,11 +68,10 @@ function displayScatterPlot(selectedEmployee) {
                 .attr("cx", d => xScale(d.coffeeConsumption))
                 .attr("cy", d => yScale(d.flamingoEnthusiasm))
                 .attr("r", d => circleScaler(d.peelSkill))
-            // ADDING INTERACTIVITY
+                // ADDING INTERACTIVITY
                 .on("click", clickToggle)
                 .on("mouseover", hoverOn)
                 .on("mouseout", hoverOff);
-            //
 
 
         // Interactivity functions
@@ -88,7 +89,7 @@ function displayScatterPlot(selectedEmployee) {
                 .attr("y", yScale(d.flamingoEnthusiasm) - 12)
                 .attr("text-anchor", "middle")
                 .text(d.employee)
-                .style("font-size", "12px")
+                .style("font-size", "13px")
                 .style("fill", "black")
                 .attr("opacity", 0)
                 .transition().duration(100)

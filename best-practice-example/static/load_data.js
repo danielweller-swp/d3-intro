@@ -1,3 +1,4 @@
+// Load and parse data from csv file
 function loadData() {
     return d3.csv("static/data/data.csv", d => ({
         employee: d.employee,
