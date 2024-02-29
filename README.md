@@ -1,5 +1,7 @@
 # L&S: D3 Introduction 
 
+![image](assets/demo_image.png)
+
 ## Structure
 ### [`best-practice-example`](best-practice-example) 
 Contains sample code for a bar plot and a scatter plot, i.e. the "go-to" plots for effective statistical graphics for 1D and 2D data.
@@ -26,19 +28,7 @@ pip install -r requirements.txt
 ```
 
 ## Execute server to display plots
-From within `best-practice-example` or `best-practice-interactive`
+From within `best-practice-example`
 ```bash
 python -m uvicorn app:app --reload
 ```
-
-
-## TODOs
-- [ ] fix deleting plot issue
-- [ ] get spacing on right side back
-- [ ] add folder with plots and interactivity
-- [ ] add exact instructions how to set up env and run code
-- [ ] Add comments
-- [ ] Final cleanup
-- [ ] Add sample image of plots to readme
-- [x] Add code for both plots
-- [x] pin versions in requirements.txt
